@@ -1,0 +1,13 @@
+import "tfplan/v2" as tfplan
+
+# Regions allowed by the organisation
+allowed_regions = [
+    "eu-west-1",
+    "eu-central-1",
+]
+
+region = tfplan.variables.aws_region.value
+
+main = rule {
+    region in allowed_regions
+}

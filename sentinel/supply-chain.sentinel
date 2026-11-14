@@ -1,0 +1,27 @@
+import "tfconfig/v2" as tfconfig
+import "strings"
+
+allowed_providers = [
+    "registry.terraform.io/hashicorp/aws",
+]
+
+valid_providers = rule {
+    all tfconfig.providers as _, provider {
+        provider.full_name in allowed_providers and
+        provider.version_constraint is not ""
+    }
+}
+
+valid_modules = rule {
+    all tfconfig.module_calls as _, module {
+        module.source is not "" and
+        (
+            module.version_constraint is not "" or
+            strings.contains(module.source, "?ref=")
+        )
+    }
+}
+
+main = rule {
+    valid_providers and valid_modules
+}

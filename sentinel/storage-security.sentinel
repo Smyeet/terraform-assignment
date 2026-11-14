@@ -1,0 +1,35 @@
+import "tfplan/v2" as tfplan
+
+# Find EC2 instances
+instances = filter tfplan.resource_changes as _, rc {
+    rc.type is "aws_instance" and
+    rc.mode is "managed" and
+    rc.change.after is not null
+}
+
+# Find separate EBS volumes
+volumes = filter tfplan.resource_changes as _, rc {
+    rc.type is "aws_ebs_volume" and
+    rc.mode is "managed" and
+    rc.change.after is not null
+}
+
+# Check root EBS volumes
+root_encrypted = rule {
+    all instances as _, instance {
+        (instance.change.after.root_block_device else []) is not null and
+        (instance.change.after.root_block_device else []) is not [] and
+        instance.change.after.root_block_device[0].encrypted is true
+    }
+}
+
+# Check standalone EBS volumes
+volumes_encrypted = rule {
+    all volumes as _, volume {
+        volume.change.after.encrypted is true
+    }
+}
+
+main = rule {
+    root_encrypted and volumes_encrypted
+}
