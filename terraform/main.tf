@@ -6,7 +6,7 @@ resource "aws_instance" "example" {
 
   # IMDSv2 for instance metadata
   metadata_options {
-    http_tokens   = "required"
+    http_tokens = "required"
   }
 
   # Encrypting the root EBS volume

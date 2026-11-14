@@ -1,0 +1,17 @@
+# Terraform downloaded files
+**/.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Terraform plan files
+tfplan
+*.tfplan
+
+# Local variables
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
