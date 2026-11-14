@@ -1,0 +1,33 @@
+import "tfplan/v2" as tfplan
+
+# Approved instance types
+allowed_types = [
+    "t3.micro",
+    "t3.small",
+]
+
+# Find managed EC2 instances being created or changed
+instances = filter tfplan.resource_changes as _, rc {
+    rc.type is "aws_instance" and
+    rc.mode is "managed" and
+    rc.change.after is not null
+}
+
+valid_instance_types = rule {
+    all instances as _, instance {
+        instance.change.after.instance_type in allowed_types
+    }
+}
+
+# checks for IMDSv2 
+valid_metadata = rule {
+    all instances as _, instance {
+        (instance.change.after.metadata_options else []) is not null and
+        (instance.change.after.metadata_options else []) is not [] and
+        instance.change.after.metadata_options[0].http_tokens is "required"
+    }
+}
+
+main = rule {
+    valid_instance_types and valid_metadata
+}

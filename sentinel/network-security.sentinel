@@ -1,0 +1,25 @@
+
+# Check security group inbound rules
+
+import "tfplan/v2" as tfplan
+
+# Find security groups
+security_groups = filter tfplan.resource_changes as _, rc {
+    rc.type is "aws_security_group" and
+    rc.mode is "managed" and
+    rc.change.after is not null
+}
+
+# Check that inbound rules are not open to everyone
+secure_ingress = rule {
+    all security_groups as _, sg {
+        all (sg.change.after.ingress else []) as ingress {
+            not ("0.0.0.0/0" in (ingress.cidr_blocks else [])) and
+            not ("::/0" in (ingress.ipv6_cidr_blocks else []))
+        }
+    }
+}
+
+main = rule {
+    secure_ingress
+}
