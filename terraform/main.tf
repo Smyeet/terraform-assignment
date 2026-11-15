@@ -11,7 +11,7 @@ resource "aws_instance" "example" {
 
   # Encrypting the root EBS volume
   root_block_device {
-    encrypted = var.ebs_encrypted
+    encrypted = false #var.ebs_encrypted
   }
 
   tags = {
