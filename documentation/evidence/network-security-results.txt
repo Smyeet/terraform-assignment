@@ -1,0 +1,28 @@
+PASS - network-security.sentinel
+  PASS - test/network-security/network-fail.hcl
+
+    trace:
+      network-security.sentinel:23:1 - Rule "main"
+        Value:
+          false
+
+      network-security.sentinel:14:1 - Rule "secure_ingress"
+        Description:
+          Check that inbound rules are not open to everyone
+
+        Value:
+          false
+  PASS - test/network-security/network-pass.hcl
+
+    trace:
+      network-security.sentinel:23:1 - Rule "main"
+        Value:
+          true
+
+      network-security.sentinel:14:1 - Rule "secure_ingress"
+        Description:
+          Check that inbound rules are not open to everyone
+
+        Value:
+          true
+1 tests completed in 1.495346ms
