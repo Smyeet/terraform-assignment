@@ -2,14 +2,8 @@ resource "aws_security_group" "ec2_security" {
   name        = "sovereignty-ec2-security"
   description = "Security group for EC2"
 
-# Intentionally insecure rule for Sentinel testing
-ingress {
-  description = "TEST ONLY - unrestricted SSH access"
-  from_port   = 22
-  to_port     = 22
-  protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
-}
+  ingress = [] # not required as we would not be keeping this open to public but to the VPC
+
   egress {
     from_port   = 0
     to_port     = 0
