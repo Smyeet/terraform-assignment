@@ -2,7 +2,7 @@
 variable "aws_region" {
   description = "AWS region where resources will be created"
   type        = string
-  default     = "us-east-1" #"eu-west-1"
+  default     = "eu-west-1"
 }
 
 # AMI for the EC2 instance
