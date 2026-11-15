@@ -1,0 +1,14 @@
+PASS - sovereignty.sentinel
+  PASS - test/sovereignty/fail.hcl
+
+    trace:
+      sovereignty.sentinel:11:1 - Rule "main"
+        Value:
+          false
+  PASS - test/sovereignty/pass.hcl
+
+    trace:
+      sovereignty.sentinel:11:1 - Rule "main"
+        Value:
+          true
+1 tests completed in 1.587242ms
