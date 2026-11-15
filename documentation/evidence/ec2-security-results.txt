@@ -1,0 +1,29 @@
+PASS - ec2-security.sentinel
+  PASS - test/ec2-security/ec-fail.hcl
+
+    trace:
+      ec2-security.sentinel:31:1 - Rule "main"
+        Value:
+          false
+
+      ec2-security.sentinel:16:1 - Rule "valid_instance_types"
+        Value:
+          false
+  PASS - test/ec2-security/ec-pass.hcl
+
+    trace:
+      ec2-security.sentinel:31:1 - Rule "main"
+        Value:
+          true
+
+      ec2-security.sentinel:16:1 - Rule "valid_instance_types"
+        Value:
+          true
+
+      ec2-security.sentinel:23:1 - Rule "valid_metadata"
+        Description:
+          checks for IMDSv2
+
+        Value:
+          true
+1 tests completed in 1.539005ms

@@ -1,0 +1,35 @@
+PASS - storage-security.sentinel
+  PASS - test/storage-security/storage-fail.hcl
+
+    trace:
+      storage-security.sentinel:33:1 - Rule "main"
+        Value:
+          false
+
+      storage-security.sentinel:18:1 - Rule "root_encrypted"
+        Description:
+          Check root EBS volumes
+
+        Value:
+          false
+  PASS - test/storage-security/storage-pass.hcl
+
+    trace:
+      storage-security.sentinel:33:1 - Rule "main"
+        Value:
+          true
+
+      storage-security.sentinel:18:1 - Rule "root_encrypted"
+        Description:
+          Check root EBS volumes
+
+        Value:
+          true
+
+      storage-security.sentinel:27:1 - Rule "volumes_encrypted"
+        Description:
+          Check standalone EBS volumes
+
+        Value:
+          true
+1 tests completed in 1.420245ms
