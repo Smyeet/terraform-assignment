@@ -1,0 +1,26 @@
+PASS - supply-chain.sentinel
+  PASS - test/supply-chain/s-chain-fail.hcl
+
+    trace:
+      supply-chain.sentinel:25:1 - Rule "main"
+        Value:
+          false
+
+      supply-chain.sentinel:11:1 - Rule "valid_providers"
+        Value:
+          false
+  PASS - test/supply-chain/s-chain-pass.hcl
+
+    trace:
+      supply-chain.sentinel:25:1 - Rule "main"
+        Value:
+          true
+
+      supply-chain.sentinel:18:1 - Rule "valid_modules"
+        Value:
+          true
+
+      supply-chain.sentinel:11:1 - Rule "valid_providers"
+        Value:
+          true
+1 tests completed in 860.519µs
